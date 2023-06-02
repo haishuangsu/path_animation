@@ -1,0 +1,28 @@
+name: path_animation
+description: A Flutter package for easy to animated the widget from the path.
+version: 0.0.1
+homepage: https://github.com/haishuangsu/path_animation.git
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+  
+environment:
+  sdk: '>=2.18.5 <3.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+
+flutter:
