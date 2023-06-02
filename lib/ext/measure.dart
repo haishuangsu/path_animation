@@ -8,7 +8,8 @@ extension WidgetMeasure on Widget {
 
   Size measure() {
     final MeasurementView rootView = pipelineOwner.rootNode = MeasurementView();
-    final RenderObjectToWidgetElement<RenderBox> element = RenderObjectToWidgetAdapter<RenderBox>(
+    final RenderObjectToWidgetElement<RenderBox> element =
+        RenderObjectToWidgetAdapter<RenderBox>(
       container: rootView,
       debugShortDescription: '[root]',
       child: Directionality(textDirection: TextDirection.ltr, child: this),
@@ -18,7 +19,8 @@ extension WidgetMeasure on Widget {
       pipelineOwner.flushLayout();
       return rootView.size;
     } finally {
-      element.update(RenderObjectToWidgetAdapter<RenderBox>(container: rootView));
+      element
+          .update(RenderObjectToWidgetAdapter<RenderBox>(container: rootView));
       buildOwner.finalizeTree();
     }
   }

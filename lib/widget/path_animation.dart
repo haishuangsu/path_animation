@@ -34,7 +34,8 @@ class PathAnimation extends StatefulWidget {
   State<StatefulWidget> createState() => _PathAnimationState();
 }
 
-class _PathAnimationState extends State<PathAnimation> with SingleTickerProviderStateMixin {
+class _PathAnimationState extends State<PathAnimation>
+    with SingleTickerProviderStateMixin {
   Offset currentOffset = Offset.zero;
 
   late Ticker ticker;
@@ -57,7 +58,9 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
 
   @override
   void didUpdateWidget(covariant PathAnimation oldWidget) {
-    if (oldWidget.repeat != widget.repeat || oldWidget.duration != widget.duration || oldWidget.curve != widget.curve) {
+    if (oldWidget.repeat != widget.repeat ||
+        oldWidget.duration != widget.duration ||
+        oldWidget.curve != widget.curve) {
       ticker.stop();
       animatedPercent = 0.0;
       ticker.start();
@@ -72,7 +75,8 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
   }
 
   void _onTick(Duration elapsed) {
-    animatedPercent = (elapsed.inMicroseconds.toDouble() / widget.duration.inMicroseconds.toDouble());
+    animatedPercent = (elapsed.inMicroseconds.toDouble() /
+        widget.duration.inMicroseconds.toDouble());
     if (widget.repeat) animatedPercent %= 1.0;
     animatedPercent = clampDouble(animatedPercent, 0.0, 1.0);
     _update();
@@ -80,9 +84,11 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
 
   void _update() {
     assert(animatedPercent <= 1.0);
-    Tangent? tangent = firstMetric.getTangentForOffset(firstMetric.length * widget.curve.transform(animatedPercent));
+    Tangent? tangent = firstMetric.getTangentForOffset(
+        firstMetric.length * widget.curve.transform(animatedPercent));
     setState(() {
-      currentOffset = tangent!.position.translate(-childSize.width / 2, -childSize.height / 2);
+      currentOffset = tangent!.position
+          .translate(-childSize.width / 2, -childSize.height / 2);
     });
   }
 

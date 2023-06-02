@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 
-class MeasurementView extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
+class MeasurementView extends RenderBox
+    with RenderObjectWithChildMixin<RenderBox> {
   @override
   void performLayout() {
     assert(child != null);
