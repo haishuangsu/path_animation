@@ -13,13 +13,15 @@ and the Flutter guide for
 
 A Flutter package for easy to animated the widget cross the path.
 
+![Screenshot](https://github.com/haishuangsu/path_animation/blob/main/screenshot/screenshot.gif)
+
 ## Getting started
 
 This will add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get):
 
 ```yaml
 dependencies:
-  path_animation: ^0.0.1
+  path_animation: ^0.1.1
 ```
 
 
@@ -29,9 +31,10 @@ dependencies:
 import 'package:path_animation/widget/path_animation.dart';
 
     PathAnimation(
-        path: Path()..addOval(const Rect.fromLTWH(100, 100, 100, 100)), // The path to set  to animated.
+        path: Path()..addOval(const Rect.fromLTWH(100, 100, 100, 100)), // Set the path.
         duration: const Duration(milliseconds: 2000),
         repeat: true,
+        reverse: false,
         curve: Curves.decelerate,
         drawPath: true,
         pathColor: Colors.red,

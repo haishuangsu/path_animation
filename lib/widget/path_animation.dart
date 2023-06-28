@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +15,7 @@ class PathAnimation extends StatefulWidget {
     required this.path,
     this.duration = const Duration(milliseconds: 1000),
     this.repeat = false,
+    this.reverse = false,
     this.curve = Curves.linear,
     this.drawPath = false,
     this.pathColor = Colors.blue,
@@ -26,6 +27,7 @@ class PathAnimation extends StatefulWidget {
   Duration duration;
   bool drawPath;
   bool repeat;
+  bool reverse;
   Curve curve;
   Color pathColor;
   double pathWidth;
@@ -41,7 +43,7 @@ class _PathAnimationState extends State<PathAnimation>
   late Ticker ticker;
   double animatedPercent = 0.0;
 
-  late PathMetric firstMetric;
+  late ui.PathMetric firstMetric;
   late Size childSize;
 
   @override
@@ -59,6 +61,7 @@ class _PathAnimationState extends State<PathAnimation>
   @override
   void didUpdateWidget(covariant PathAnimation oldWidget) {
     if (oldWidget.repeat != widget.repeat ||
+        oldWidget.reverse != widget.reverse ||
         oldWidget.duration != widget.duration ||
         oldWidget.curve != widget.curve) {
       ticker.stop();
@@ -78,13 +81,16 @@ class _PathAnimationState extends State<PathAnimation>
     animatedPercent = (elapsed.inMicroseconds.toDouble() /
         widget.duration.inMicroseconds.toDouble());
     if (widget.repeat) animatedPercent %= 1.0;
+    animatedPercent = widget.reverse
+        ? ui.lerpDouble(1.0, 0.0, animatedPercent)!
+        : ui.lerpDouble(0.0, 1.0, animatedPercent)!;
     animatedPercent = clampDouble(animatedPercent, 0.0, 1.0);
     _update();
   }
 
   void _update() {
     assert(animatedPercent <= 1.0);
-    Tangent? tangent = firstMetric.getTangentForOffset(
+    ui.Tangent? tangent = firstMetric.getTangentForOffset(
         firstMetric.length * widget.curve.transform(animatedPercent));
     setState(() {
       currentOffset = tangent!.position

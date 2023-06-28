@@ -30,11 +30,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late Path path;
+  Path ovalPath = Path()..addOval(const Rect.fromLTWH(100, 80, 100, 100));
+  Path rectPath = Path()..addRect(const Rect.fromLTWH(100, 80, 100, 100));
+  Path bezierPath = Path()
+    ..cubicTo(50.0, 0.0, 100.0, 120.0, 200.0, 0.0)
+    ..cubicTo(200.0, 0.0, 250.0, 200.0, 400.0, 0.0);
 
   @override
   void initState() {
-    path = Path()..addOval(const Rect.fromLTWH(100, 100, 100, 100));
     super.initState();
   }
 
@@ -44,18 +47,53 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: PathAnimation(
-        path: path,
-        duration: const Duration(milliseconds: 2000),
-        repeat: true,
-        curve: Curves.decelerate,
-        drawPath: true,
-        pathColor: Colors.red,
-        pathWidth: 1,
-        child: const Icon(
-          Icons.flutter_dash,
-          size: 30,
-        ),
+      body: Column(
+        children: [
+          PathAnimation(
+            path: ovalPath,
+            duration: const Duration(milliseconds: 2000),
+            repeat: true,
+            reverse: false,
+            curve: Curves.decelerate,
+            drawPath: true,
+            pathColor: Colors.red,
+            pathWidth: 1,
+            child: const Icon(
+              Icons.flutter_dash,
+              size: 30,
+            ),
+          ),
+          const SizedBox(height: 100),
+          PathAnimation(
+            path: rectPath,
+            duration: const Duration(milliseconds: 3000),
+            repeat: true,
+            reverse: true,
+            curve: Curves.bounceInOut,
+            drawPath: true,
+            pathColor: Colors.blue,
+            pathWidth: 1,
+            child: const Icon(
+              Icons.flutter_dash,
+              size: 30,
+            ),
+          ),
+          const SizedBox(height: 200),
+          PathAnimation(
+            path: bezierPath,
+            duration: const Duration(milliseconds: 3000),
+            curve: Curves.fastOutSlowIn,
+            repeat: true,
+            reverse: false,
+            drawPath: true,
+            pathColor: Colors.purpleAccent,
+            pathWidth: 1,
+            child: const Icon(
+              Icons.flutter_dash,
+              size: 30,
+            ),
+          ),
+        ],
       ),
     );
   }
