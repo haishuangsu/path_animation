@@ -13,7 +13,8 @@ and the Flutter guide for
 
 A Flutter package for easy to animated the widget cross the path.
 
-![Screenshot](https://github.com/haishuangsu/path_animation/blob/main/screenshot/screenshot.gif)
+![Screenshot](https://github.com/haishuangsu/path_animation/blob/master/screenshot/screenshot.gif)
+
 
 ## Getting started
 
