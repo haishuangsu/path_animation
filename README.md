@@ -22,7 +22,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```yaml
 dependencies:
-  path_animation: ^0.1.1
+  path_animation: ^0.1.2
 ```
 
 
@@ -37,6 +37,7 @@ import 'package:path_animation/widget/path_animation.dart';
         repeat: true,
         reverse: false,
         curve: Curves.decelerate,
+        startAnimatedPercent: 0.25,
         drawPath: true,
         pathColor: Colors.red,
         pathWidth: 1,

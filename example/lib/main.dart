@@ -49,19 +49,68 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: [
-          PathAnimation(
-            path: ovalPath,
-            duration: const Duration(milliseconds: 2000),
-            repeat: true,
-            reverse: false,
-            curve: Curves.decelerate,
-            drawPath: true,
-            pathColor: Colors.red,
-            pathWidth: 1,
-            child: const Icon(
-              Icons.flutter_dash,
-              size: 30,
-            ),
+          Stack(
+            children: [
+              PathAnimation(
+                path: ovalPath,
+                duration: const Duration(milliseconds: 3000),
+                repeat: true,
+                reverse: false,
+                curve: Curves.linear,
+                drawPath: true,
+                pathColor: Colors.red,
+                pathWidth: 1,
+                child: const Icon(
+                  Icons.flutter_dash,
+                  size: 30,
+                ),
+              ),
+              PathAnimation(
+                path: ovalPath,
+                duration: const Duration(milliseconds: 3000),
+                repeat: true,
+                reverse: false,
+                curve: Curves.linear,
+                drawPath: true,
+                pathColor: Colors.red,
+                pathWidth: 1,
+                startAnimatedPercent: 0.25,
+                child: const Icon(
+                  Icons.flutter_dash,
+                  size: 30,
+                ),
+              ),
+              PathAnimation(
+                path: ovalPath,
+                duration: const Duration(milliseconds: 3000),
+                repeat: true,
+                reverse: false,
+                curve: Curves.linear,
+                drawPath: true,
+                pathColor: Colors.red,
+                pathWidth: 1,
+                startAnimatedPercent: 0.5,
+                child: const Icon(
+                  Icons.flutter_dash,
+                  size: 30,
+                ),
+              ),
+              PathAnimation(
+                path: ovalPath,
+                duration: const Duration(milliseconds: 3000),
+                repeat: true,
+                reverse: false,
+                curve: Curves.linear,
+                drawPath: true,
+                pathColor: Colors.red,
+                pathWidth: 1,
+                startAnimatedPercent: 0.75,
+                child: const Icon(
+                  Icons.flutter_dash,
+                  size: 30,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 100),
           PathAnimation(
@@ -81,13 +130,14 @@ class _MyHomePageState extends State<MyHomePage> {
           const SizedBox(height: 200),
           PathAnimation(
             path: bezierPath,
-            duration: const Duration(milliseconds: 3000),
-            curve: Curves.fastOutSlowIn,
+            duration: const Duration(milliseconds: 6000),
+            curve: Curves.linear,
             repeat: true,
             reverse: false,
             drawPath: true,
             pathColor: Colors.purpleAccent,
             pathWidth: 1,
+            startAnimatedPercent: 0.25,
             child: const Icon(
               Icons.flutter_dash,
               size: 30,
