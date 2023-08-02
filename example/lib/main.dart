@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
           PathAnimation(
             path: rectPath,
             duration: const Duration(milliseconds: 3000),
-            repeat: true,
+            repeat: false,
             reverse: true,
             curve: Curves.bounceInOut,
             drawPath: true,
@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
             path: bezierPath,
             duration: const Duration(milliseconds: 6000),
             curve: Curves.linear,
-            repeat: true,
+            repeat: false,
             reverse: false,
             drawPath: true,
             pathColor: Colors.purpleAccent,

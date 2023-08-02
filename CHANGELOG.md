@@ -1,3 +1,6 @@
+## 1.0.0
+* Fix the isusue that ticker didn't stop in normal mode.
+
 ## 0.1.2
 * Add arg - startAnimatedPercent.
 

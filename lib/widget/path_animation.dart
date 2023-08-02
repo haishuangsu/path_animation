@@ -109,6 +109,12 @@ class _PathAnimationState extends State<PathAnimation>
         ? ui.lerpDouble(1.0, 0.0, currentAnimatedPercent)!
         : ui.lerpDouble(0.0, 1.0, currentAnimatedPercent)!;
     currentAnimatedPercent = clampDouble(currentAnimatedPercent, 0.0, 1.0);
+
+    if (!widget.repeat &&
+        elapsed.inMicroseconds / Duration.microsecondsPerSecond >
+            widget.duration.inMicroseconds / Duration.microsecondsPerSecond) {
+      ticker.stop();
+    }
     _update();
   }
 
