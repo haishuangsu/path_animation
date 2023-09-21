@@ -7,7 +7,6 @@ import 'package:path_animation/ext/measure.dart';
 
 import 'package:path_animation/widget/path_painter.dart';
 
-// ignore: must_be_immutable
 class PathAnimation extends StatefulWidget {
   PathAnimation({
     super.key,
@@ -21,21 +20,25 @@ class PathAnimation extends StatefulWidget {
     this.drawPath = false,
     this.pathColor = Colors.blue,
     this.pathWidth = 1.0,
-  }) : assert(
+  })  : width = path.getBounds().width,
+        height = path.getBounds().height,
+        assert(
           0.0 <= startAnimatedPercent && startAnimatedPercent <= 1.0,
           'startAnimatedPercent must be between 0.0 and 1.0',
         );
 
   final Widget child;
+  final double width;
+  final double height;
   final Path path;
-  Duration duration;
-  bool drawPath;
-  bool repeat;
-  bool reverse;
-  Curve curve;
-  Color pathColor;
-  double pathWidth;
-  double startAnimatedPercent;
+  final Duration duration;
+  final bool drawPath;
+  final bool repeat;
+  final bool reverse;
+  final Curve curve;
+  final Color pathColor;
+  final double pathWidth;
+  final double startAnimatedPercent;
 
   @override
   State<StatefulWidget> createState() => _PathAnimationState();
@@ -49,21 +52,22 @@ class _PathAnimationState extends State<PathAnimation>
   late Size childSize;
   Offset currentOffset = Offset.zero;
   late double initElapsed;
+  late double width;
+  late double height;
+  double topLeftX = 0.0;
+  double topLeftY = 0.0;
 
   @override
   void initState() {
     currentAnimatedPercent = widget.startAnimatedPercent;
     childSize = widget.child.measure();
+    _computeSize();
     firstMetric = widget.path.computeMetrics().first;
 
     if (widget.startAnimatedPercent > 0.0) {
       initElapsed = widget.duration.inMicroseconds.toDouble() *
           widget.startAnimatedPercent;
-
-      ui.Tangent? tangent = firstMetric.getTangentForOffset(
-          firstMetric.length * widget.curve.transform(currentAnimatedPercent));
-      currentOffset = tangent!.position
-          .translate(-childSize.width / 2, -childSize.height / 2);
+      _updateOffset();
     }
 
     ticker = createTicker(_onTick);
@@ -87,10 +91,23 @@ class _PathAnimationState extends State<PathAnimation>
     super.didUpdateWidget(oldWidget);
   }
 
-  @override
-  void dispose() {
-    ticker.dispose();
-    super.dispose();
+  void _computeSize() {
+    topLeftX = widget.path.getBounds().topLeft.dx;
+    topLeftY = widget.path.getBounds().topLeft.dy;
+    if (widget.height == 0.0) {
+      width = widget.width;
+      height = childSize.height;
+    } else if (widget.width == 0.0) {
+      width = childSize.width;
+      height = widget.height;
+    } else {
+      width = widget.width;
+      height = widget.height;
+    }
+    width += childSize.width / 2;
+    height += childSize.height / 2;
+    width += topLeftX;
+    height += topLeftY;
   }
 
   void _onTick(Duration elapsed) {
@@ -120,32 +137,49 @@ class _PathAnimationState extends State<PathAnimation>
 
   void _update() {
     assert(currentAnimatedPercent <= 1.0);
+    _updateOffset();
+    setState(() {});
+  }
 
+  @override
+  void dispose() {
+    ticker.dispose();
+    super.dispose();
+  }
+
+  void _updateOffset() {
     ui.Tangent? tangent = firstMetric.getTangentForOffset(
         firstMetric.length * widget.curve.transform(currentAnimatedPercent));
-    setState(() {
-      currentOffset = tangent!.position
-          .translate(-childSize.width / 2, -childSize.height / 2);
-    });
+    currentOffset =
+        tangent!.position.translate(-(widget.width / 2), -(widget.height / 2));
+    if (topLeftX != 0.0 || topLeftY != 0.0) {
+      currentOffset = currentOffset.translate(-topLeftX / 2, -topLeftY / 2);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Transform.translate(
-      offset: currentOffset,
-      child: widget.child,
+    Widget child = SizedBox(
+      width: width,
+      height: height,
+      child: Transform.translate(
+        offset: currentOffset,
+        child: widget.child,
+      ),
     );
 
     if (widget.drawPath) {
       child = CustomPaint(
         painter: PathPainter(
-          path: widget.path,
+          path: widget.path
+              .shift(Offset(childSize.width / 4, childSize.height / 4)),
           pathColor: widget.pathColor,
           pathWidth: widget.pathWidth,
         ),
         child: child,
       );
     }
+
     return RepaintBoundary(child: child);
   }
 }

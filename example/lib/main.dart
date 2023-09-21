@@ -30,11 +30,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Path ovalPath = Path()..addOval(const Rect.fromLTWH(100, 80, 100, 100));
-  Path rectPath = Path()..addRect(const Rect.fromLTWH(100, 80, 100, 100));
+  Path ovalPath = Path()..addOval(const Rect.fromLTWH(0, 0, 100, 100));
+  Path rectPath = Path()..addRect(const Rect.fromLTWH(0, 0, 100, 100));
   Path bezierPath = Path()
-    ..cubicTo(50.0, 0.0, 100.0, 120.0, 200.0, 0.0)
-    ..cubicTo(200.0, 0.0, 250.0, 200.0, 400.0, 0.0);
+    ..moveTo(0.0, 0.0)
+    ..quadraticBezierTo(20.0, 70.0, 200, 60);
 
   @override
   void initState() {
@@ -48,75 +48,85 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              PathAnimation(
-                path: ovalPath,
-                duration: const Duration(milliseconds: 3000),
-                repeat: true,
-                reverse: false,
-                curve: Curves.linear,
-                drawPath: true,
-                pathColor: Colors.red,
-                pathWidth: 1,
-                child: const Icon(
-                  Icons.flutter_dash,
-                  size: 30,
+          Padding(
+            padding: const EdgeInsets.only(left: 10, top: 10),
+            child: Stack(
+              children: [
+                PathAnimation(
+                  path: ovalPath,
+                  duration: const Duration(milliseconds: 8000),
+                  repeat: true,
+                  reverse: false,
+                  curve: Curves.linear,
+                  drawPath: true,
+                  pathColor: Colors.red,
+                  pathWidth: 1,
+                  child: const Icon(
+                    Icons.flutter_dash,
+                    size: 30,
+                  ),
                 ),
-              ),
-              PathAnimation(
-                path: ovalPath,
-                duration: const Duration(milliseconds: 3000),
-                repeat: true,
-                reverse: false,
-                curve: Curves.linear,
-                drawPath: true,
-                pathColor: Colors.red,
-                pathWidth: 1,
-                startAnimatedPercent: 0.25,
-                child: const Icon(
-                  Icons.flutter_dash,
-                  size: 30,
+                PathAnimation(
+                  path: ovalPath,
+                  duration: const Duration(milliseconds: 3000),
+                  repeat: true,
+                  reverse: false,
+                  curve: Curves.linear,
+                  drawPath: true,
+                  pathColor: Colors.red,
+                  pathWidth: 1,
+                  startAnimatedPercent: 0.25,
+                  child: const Icon(
+                    Icons.flutter_dash,
+                    size: 30,
+                  ),
                 ),
-              ),
-              PathAnimation(
-                path: ovalPath,
-                duration: const Duration(milliseconds: 3000),
-                repeat: true,
-                reverse: false,
-                curve: Curves.linear,
-                drawPath: true,
-                pathColor: Colors.red,
-                pathWidth: 1,
-                startAnimatedPercent: 0.5,
-                child: const Icon(
-                  Icons.flutter_dash,
-                  size: 30,
+                PathAnimation(
+                  path: ovalPath,
+                  duration: const Duration(milliseconds: 3000),
+                  repeat: true,
+                  reverse: false,
+                  curve: Curves.linear,
+                  drawPath: true,
+                  pathColor: Colors.red,
+                  pathWidth: 1,
+                  startAnimatedPercent: 0.5,
+                  child: const Icon(
+                    Icons.flutter_dash,
+                    size: 30,
+                  ),
                 ),
-              ),
-              PathAnimation(
-                path: ovalPath,
-                duration: const Duration(milliseconds: 3000),
-                repeat: true,
-                reverse: false,
-                curve: Curves.linear,
-                drawPath: true,
-                pathColor: Colors.red,
-                pathWidth: 1,
-                startAnimatedPercent: 0.75,
-                child: const Icon(
-                  Icons.flutter_dash,
-                  size: 30,
+                PathAnimation(
+                  path: ovalPath,
+                  duration: const Duration(milliseconds: 6000),
+                  repeat: true,
+                  reverse: false,
+                  curve: Curves.linear,
+                  drawPath: true,
+                  pathColor: Colors.red,
+                  pathWidth: 1,
+                  startAnimatedPercent: 0.75,
+                  child: GestureDetector(
+                    onTap: () {
+                      debugPrint('Tap from oval path');
+                    },
+                    child: const Icon(
+                      Icons.flutter_dash,
+                      color: Colors.redAccent,
+                      size: 30,
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 100),
           PathAnimation(
             path: rectPath,
             duration: const Duration(milliseconds: 3000),
-            repeat: false,
+            repeat: true,
             reverse: true,
             curve: Curves.bounceInOut,
             drawPath: true,
@@ -127,20 +137,25 @@ class _MyHomePageState extends State<MyHomePage> {
               size: 30,
             ),
           ),
-          const SizedBox(height: 200),
+          const SizedBox(height: 100),
           PathAnimation(
             path: bezierPath,
-            duration: const Duration(milliseconds: 6000),
+            duration: const Duration(milliseconds: 8000),
             curve: Curves.linear,
-            repeat: false,
+            repeat: true,
             reverse: false,
             drawPath: true,
             pathColor: Colors.purpleAccent,
             pathWidth: 1,
             startAnimatedPercent: 0.25,
-            child: const Icon(
-              Icons.flutter_dash,
-              size: 30,
+            child: GestureDetector(
+              onTap: () {
+                debugPrint('Tap from bezier path');
+              },
+              child: const Icon(
+                Icons.flutter_dash,
+                size: 30,
+              ),
             ),
           ),
         ],
