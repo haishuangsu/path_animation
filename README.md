@@ -11,7 +11,7 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-A Flutter package for easy to animated the widget cross the path.
+A Flutter package, path animation - that is used to moving the widget on given path.
 
 ![Screenshot](https://github.com/haishuangsu/path_animation/blob/master/screenshot/screenshot.gif?raw=true)
 
@@ -22,7 +22,7 @@ This will add a line like this to your package's pubspec.yaml (and run an implic
 
 ```yaml
 dependencies:
-  path_animation: ^1.0.1
+  path_animation: ^1.0.2
 ```
 
 

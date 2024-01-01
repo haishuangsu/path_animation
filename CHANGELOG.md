@@ -1,3 +1,6 @@
+## 1.0.2
+* modify the package description.
+
 ## 1.0.1
 * Fixed an issue where child Widgets would not respond to gestures during animation.
 * Update example
