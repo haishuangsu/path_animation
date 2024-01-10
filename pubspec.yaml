@@ -1,6 +1,6 @@
 name: path_animation
-description: A Flutter package for easy to animated the widget cross the path.
-version: 1.0.2
+description: A Flutter package, path animation - that is used to moving the widget on given path.
+version: 1.0.3
 homepage: https://github.com/haishuangsu/path_animation.git
 
 platforms:
