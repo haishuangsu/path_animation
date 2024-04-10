@@ -1,3 +1,6 @@
+## 1.0.5
+* fix the [issue](https://github.com/haishuangsu/path_animation/issues/3).
+
 ## 1.0.3
 * modify the Metadata.
 

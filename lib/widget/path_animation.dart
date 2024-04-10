@@ -44,8 +44,7 @@ class PathAnimation extends StatefulWidget {
   State<StatefulWidget> createState() => _PathAnimationState();
 }
 
-class _PathAnimationState extends State<PathAnimation>
-    with SingleTickerProviderStateMixin {
+class _PathAnimationState extends State<PathAnimation> with SingleTickerProviderStateMixin {
   late Ticker ticker;
   late double currentAnimatedPercent;
   late ui.PathMetric firstMetric;
@@ -60,13 +59,10 @@ class _PathAnimationState extends State<PathAnimation>
   @override
   void initState() {
     currentAnimatedPercent = widget.startAnimatedPercent;
-    childSize = widget.child.measure();
-    _computeSize();
-    firstMetric = widget.path.computeMetrics().first;
+    _prepareChild();
 
     if (widget.startAnimatedPercent > 0.0) {
-      initElapsed = widget.duration.inMicroseconds.toDouble() *
-          widget.startAnimatedPercent;
+      initElapsed = widget.duration.inMicroseconds.toDouble() * widget.startAnimatedPercent;
       _updateOffset();
     }
 
@@ -83,12 +79,20 @@ class _PathAnimationState extends State<PathAnimation>
         oldWidget.reverse != widget.reverse ||
         oldWidget.duration != widget.duration ||
         oldWidget.curve != widget.curve ||
-        oldWidget.startAnimatedPercent != widget.startAnimatedPercent) {
+        oldWidget.startAnimatedPercent != widget.startAnimatedPercent ||
+        oldWidget.path != widget.path) {
       ticker.stop();
       currentAnimatedPercent = 0.0;
+      _prepareChild();
       ticker.start();
     }
     super.didUpdateWidget(oldWidget);
+  }
+
+  void _prepareChild() {
+    childSize = widget.child.measure();
+    _computeSize();
+    firstMetric = widget.path.computeMetrics().first;
   }
 
   void _computeSize() {
@@ -113,11 +117,9 @@ class _PathAnimationState extends State<PathAnimation>
   void _onTick(Duration elapsed) {
     if (widget.startAnimatedPercent > 0.0) {
       currentAnimatedPercent =
-          (initElapsed + elapsed.inMicroseconds.toDouble()) /
-              widget.duration.inMicroseconds.toDouble();
+          (initElapsed + elapsed.inMicroseconds.toDouble()) / widget.duration.inMicroseconds.toDouble();
     } else {
-      currentAnimatedPercent = elapsed.inMicroseconds.toDouble() /
-          widget.duration.inMicroseconds.toDouble();
+      currentAnimatedPercent = elapsed.inMicroseconds.toDouble() / widget.duration.inMicroseconds.toDouble();
     }
 
     if (widget.repeat) currentAnimatedPercent %= 1.0;
@@ -148,10 +150,9 @@ class _PathAnimationState extends State<PathAnimation>
   }
 
   void _updateOffset() {
-    ui.Tangent? tangent = firstMetric.getTangentForOffset(
-        firstMetric.length * widget.curve.transform(currentAnimatedPercent));
-    currentOffset =
-        tangent!.position.translate(-(widget.width / 2), -(widget.height / 2));
+    ui.Tangent? tangent =
+        firstMetric.getTangentForOffset(firstMetric.length * widget.curve.transform(currentAnimatedPercent));
+    currentOffset = tangent!.position.translate(-(widget.width / 2), -(widget.height / 2));
     if (topLeftX != 0.0 || topLeftY != 0.0) {
       currentOffset = currentOffset.translate(-topLeftX / 2, -topLeftY / 2);
     }
@@ -171,8 +172,7 @@ class _PathAnimationState extends State<PathAnimation>
     if (widget.drawPath) {
       child = CustomPaint(
         painter: PathPainter(
-          path: widget.path
-              .shift(Offset(childSize.width / 4, childSize.height / 4)),
+          path: widget.path.shift(Offset(childSize.width / 4, childSize.height / 4)),
           pathColor: widget.pathColor,
           pathWidth: widget.pathWidth,
         ),
