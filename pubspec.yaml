@@ -1,6 +1,6 @@
 name: path_animation
 description: A Flutter package, path animation - that is used to moving the widget on given path.
-version: 1.0.3
+version: 1.0.5
 homepage: https://github.com/haishuangsu/path_animation.git
 
 platforms:
