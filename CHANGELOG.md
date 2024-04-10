@@ -1,4 +1,4 @@
-## 1.0.5
+## 1.1.0
 * fix the [issue](https://github.com/haishuangsu/path_animation/issues/3).
 
 ## 1.0.3
