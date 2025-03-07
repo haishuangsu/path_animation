@@ -150,9 +150,14 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
   }
 
   void _updateOffset() {
-    ui.Tangent? tangent =
+    final tangent =
         firstMetric.getTangentForOffset(firstMetric.length * widget.curve.transform(currentAnimatedPercent));
-    currentOffset = tangent!.position.translate(-(widget.width / 2), -(widget.height / 2));
+
+    if (tangent == null) {
+      return;
+    }
+
+    currentOffset = tangent.position.translate(-(widget.width / 2), -(widget.height / 2));
     if (topLeftX != 0.0 || topLeftY != 0.0) {
       currentOffset = currentOffset.translate(-topLeftX / 2, -topLeftY / 2);
     }
@@ -160,26 +165,31 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    Widget child = SizedBox(
-      width: width,
-      height: height,
-      child: Transform.translate(
-        offset: currentOffset,
-        child: widget.child,
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        if (widget.drawPath)
+          Padding(
+            padding: EdgeInsets.only(left: topLeftX, top: topLeftY),
+            child: SizedBox(
+              width: width,
+              height: height,
+              child: CustomPaint(
+                painter: PathPainter(
+                  path: widget.path.shift(Offset(childSize.width / 4, childSize.height / 4)),
+                  pathColor: widget.pathColor,
+                  pathWidth: widget.pathWidth,
+                ),
+              ),
+            ),
+          ),
+        RepaintBoundary(
+          child: Transform.translate(
+            offset: currentOffset,
+            child: widget.child,
+          ),
+        )
+      ],
     );
-
-    if (widget.drawPath) {
-      child = CustomPaint(
-        painter: PathPainter(
-          path: widget.path.shift(Offset(childSize.width / 4, childSize.height / 4)),
-          pathColor: widget.pathColor,
-          pathWidth: widget.pathWidth,
-        ),
-        child: child,
-      );
-    }
-
-    return RepaintBoundary(child: child);
   }
 }
