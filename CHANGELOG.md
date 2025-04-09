@@ -1,3 +1,7 @@
+## 1.1.1
+* performance optimization.
+* upgrade examples.
+
 ## 1.1.0
 * fix the [issue](https://github.com/haishuangsu/path_animation/issues/3).
 

@@ -1,33 +1,32 @@
-# Path Animation
+# 路径动画 (Path Animation)
 
 [![pub package](https://img.shields.io/pub/v/path_animation.svg)](https://pub.dev/packages/path_animation)
 
-A powerful Flutter animation package that allows widgets to move along custom paths. With Path Animation, you can easily create animations that follow any path (straight lines, curves, circles, ovals, etc.), adding engaging and interactive experiences to your applications.
+一个强大的 Flutter 动画包，专门用于沿着自定义路径移动 Widget。通过 Path Animation，您可以轻松创建沿任意路径（如直线、曲线、圆形、椭圆形等）移动的动画效果，为您的应用增添生动有趣的交互体验。
 
-[中文文档](README_CN.md)
+[English](README.md)
 
 ![Screenshot](https://github.com/haishuangsu/path_animation/blob/master/screenshot/solar.gif?raw=true) ![Screenshot](https://github.com/haishuangsu/path_animation/blob/master/screenshot/vortex.gif?raw=true)
 
-## Features
+## 特性
 
-- 🛤️ Support for any custom path animation
-- 🔄 Support for loop and reverse playback
-- ⏱️ Customizable animation duration and curves
-- 🎨 Optional path display with styling options
-- 🚀 High-performance, smooth animations
-- 📱 Support for all Flutter platforms
+- 🛤️ 支持任意自定义路径动画
+- 🔄 支持循环播放和反向播放
+- ⏱️ 自定义动画持续时间和曲线
+- 🎨 可选择是否显示路径及其样式
+- 🚀 高性能，流畅的动画体验
+- 📱 支持所有 Flutter 平台
 
-## Getting started
+## 开始使用
 
-This will add a line like this to your package's pubspec.yaml (and run an implicit flutter pub get):
+将以下代码添加到您的 pubspec.yaml 文件中（并运行 flutter pub get）：
 
 ```yaml
 dependencies:
   path_animation: ^1.1.1
 ```
 
-## Usage
-
+## 使用
 ```dart
 import 'package:path_animation/widget/path_animation.dart';
 

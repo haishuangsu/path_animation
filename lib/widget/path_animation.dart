@@ -44,7 +44,8 @@ class PathAnimation extends StatefulWidget {
   State<StatefulWidget> createState() => _PathAnimationState();
 }
 
-class _PathAnimationState extends State<PathAnimation> with SingleTickerProviderStateMixin {
+class _PathAnimationState extends State<PathAnimation>
+    with SingleTickerProviderStateMixin {
   late Ticker ticker;
   late double currentAnimatedPercent;
   late ui.PathMetric firstMetric;
@@ -62,7 +63,8 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
     _prepareChild();
 
     if (widget.startAnimatedPercent > 0.0) {
-      initElapsed = widget.duration.inMicroseconds.toDouble() * widget.startAnimatedPercent;
+      initElapsed = widget.duration.inMicroseconds.toDouble() *
+          widget.startAnimatedPercent;
       _updateOffset();
     }
 
@@ -117,9 +119,11 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
   void _onTick(Duration elapsed) {
     if (widget.startAnimatedPercent > 0.0) {
       currentAnimatedPercent =
-          (initElapsed + elapsed.inMicroseconds.toDouble()) / widget.duration.inMicroseconds.toDouble();
+          (initElapsed + elapsed.inMicroseconds.toDouble()) /
+              widget.duration.inMicroseconds.toDouble();
     } else {
-      currentAnimatedPercent = elapsed.inMicroseconds.toDouble() / widget.duration.inMicroseconds.toDouble();
+      currentAnimatedPercent = elapsed.inMicroseconds.toDouble() /
+          widget.duration.inMicroseconds.toDouble();
     }
 
     if (widget.repeat) currentAnimatedPercent %= 1.0;
@@ -150,14 +154,15 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
   }
 
   void _updateOffset() {
-    final tangent =
-        firstMetric.getTangentForOffset(firstMetric.length * widget.curve.transform(currentAnimatedPercent));
+    final tangent = firstMetric.getTangentForOffset(
+        firstMetric.length * widget.curve.transform(currentAnimatedPercent));
 
     if (tangent == null) {
       return;
     }
 
-    currentOffset = tangent.position.translate(-(widget.width / 2), -(widget.height / 2));
+    currentOffset =
+        tangent.position.translate(-(widget.width / 2), -(widget.height / 2));
     if (topLeftX != 0.0 || topLeftY != 0.0) {
       currentOffset = currentOffset.translate(-topLeftX / 2, -topLeftY / 2);
     }
@@ -176,7 +181,8 @@ class _PathAnimationState extends State<PathAnimation> with SingleTickerProvider
               height: height,
               child: CustomPaint(
                 painter: PathPainter(
-                  path: widget.path.shift(Offset(childSize.width / 4, childSize.height / 4)),
+                  path: widget.path
+                      .shift(Offset(childSize.width / 4, childSize.height / 4)),
                   pathColor: widget.pathColor,
                   pathWidth: widget.pathWidth,
                 ),
